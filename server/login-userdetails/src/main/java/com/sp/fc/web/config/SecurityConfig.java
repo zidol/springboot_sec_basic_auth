@@ -1,5 +1,6 @@
 package com.sp.fc.web.config;
 
+import com.sp.fc.user.service.SpUserService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -10,35 +11,27 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CustomAuthDetail customAuthDetail;
+    private final SpUserService userService;
 
-    public SecurityConfig(CustomAuthDetail customAuthDetail) {
-        this.customAuthDetail = customAuthDetail;
+    public SecurityConfig(SpUserService userService) {
+        this.userService = userService;
+    }
+
+    @Bean//테스트용이기때문에 사용
+    PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser(
-                        User.withDefaultPasswordEncoder()
-                                .username("user1")
-                                .password("1111")
-                                .roles("USER")
-                ).withUser(
-                User.withDefaultPasswordEncoder()
-                        .username("admin")
-                        .password("2222")
-                        .roles("ADMIN")
-        );
+            auth.userDetailsService(userService);//db User
     }
 
     @Bean
@@ -60,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .loginProcessingUrl("/loginprocess")
                         .permitAll()
                         .defaultSuccessUrl("/", false)
-                        .authenticationDetailsSource(customAuthDetail)
+
                         .failureUrl("/login-error")
                 )
                 .logout(logout->
@@ -75,7 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .requestMatchers(
-                        PathRequest.toStaticResources().atCommonLocations()
+                        PathRequest.toStaticResources().atCommonLocations(),
+                        PathRequest.toH2Console()//h2-console사용하기위해 추가해줌
                 )
         ;
     }
