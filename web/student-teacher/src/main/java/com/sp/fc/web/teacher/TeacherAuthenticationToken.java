@@ -1,6 +1,5 @@
 package com.sp.fc.web.teacher;
 
-import com.sp.fc.web.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
