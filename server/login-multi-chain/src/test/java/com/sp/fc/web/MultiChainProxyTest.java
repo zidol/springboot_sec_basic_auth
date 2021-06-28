@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -52,6 +54,18 @@ public class MultiChainProxyTest {
 //
 //        System.out.println("list = " + list);
 //        assertEquals(3, list.size());
+    }
+
+
+    TestRestTemplate testClient = new TestRestTemplate("choi", "1");
+
+    @DisplayName("choi:1로 로그인해서 학생 리스트를 내려 받는다.")
+    @Test
+    void test_2() {
+        ResponseEntity<List<Student>> resp = testClient.exchange("http://localhost:" + port + "/api/teacher/students",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<Student>>() {
+                });
+        System.out.println("resp.getBody() = " + resp.getBody());
     }
 
 }
