@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -19,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
+import org.springframework.security.web.session.ConcurrentSessionFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.servlet.http.HttpSessionEvent;
@@ -28,6 +31,9 @@ import java.time.LocalDateTime;
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    
+    ConcurrentSessionFilter concurrentSessionFilter;
+    ConcurrentSessionControlAuthenticationStrategy session;
 
     private final SpUserService spUserService;
     private final DataSource dataSource;
@@ -130,8 +136,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .sessionManagement(
                         s ->  s
-                        .maximumSessions(1)// 1 : 한유저에 한 세션만 제공
-                        .maxSessionsPreventsLogin(false)// 기존 세션을 만료 할지 새로 들어온 세션을 만료 할지 결정 지금은 새로들어온거
+//                                .sessionCreationPolicy(p -> SessionCreationPolicy.STATELESS)
+//                                .sessionFixation(sessionFixationConfigurer -> sessionFixationConfigurer.changeSessionId())  //세션고정 공격을 피하기 위함
+                        .maximumSessions(2)// 1 : 한유저에게 한 세션만 제공
+                        .maxSessionsPreventsLogin(true)// 기존 세션을 만료 할지 새로 들어온 세션을 만료 할지 결정 : false : 기존건 만료 시키고  새로들어온거
                         .expiredUrl("/session-expired")// 세션 만료 되었을때 이동 페이지
                 )
                 ;
