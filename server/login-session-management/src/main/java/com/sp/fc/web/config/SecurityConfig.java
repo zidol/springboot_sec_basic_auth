@@ -105,7 +105,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         service.setAlwaysRemember(true);    //테스트용으로 항상 remember me 토큰을 가지고 잇음
         return service;
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
