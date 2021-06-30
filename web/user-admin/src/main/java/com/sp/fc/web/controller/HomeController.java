@@ -20,6 +20,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/login-required")
+    public String loginRequired(){
+        return "LoginRequired";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "loginForm";
@@ -36,9 +41,15 @@ public class HomeController {
         return "AccessDenied";
     }
 
+    @GetMapping("/access-denied2")
+    public String accessDenied2(){
+        return "AccessDenied2";
+    }
+
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     @GetMapping("/user-page")
     public String userPage(){
+        if(true) throw new YouCannotAccessUserPage();
         return "UserPage";
     }
 
