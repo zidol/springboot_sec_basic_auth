@@ -1,5 +1,6 @@
 package com.sp.fc.web.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -15,26 +16,37 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 
 import java.util.Collection;
 
-
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         auth
                 .inMemoryAuthentication()
                 .withUser(
                         User.withDefaultPasswordEncoder()
-                                .username("user1")
+                        .username("user1")
+                        .password("1111")
+                        .roles("USER", "STUDENT")
+                )
+                .withUser(
+                        User.withDefaultPasswordEncoder()
+                                .username("user2")
                                 .password("1111")
-                                .roles("USER")
-                );
+                                .roles("USER", "STUDENT")
+                )
+                .withUser(
+                        User.withDefaultPasswordEncoder()
+                                .username("tutor1")
+                                .password("1111")
+                                .roles("USER", "TUTOR")
+                )
+                ;
     }
 
     FilterSecurityInterceptor filterSecurityInterceptor;
-    AccessDecisionManager filterAccessDecisionManager() {
-        //AccessManager 구현
+
+    AccessDecisionManager filterAccessDecisionManager(){
         return new AccessDecisionManager() {
             @Override
             public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
@@ -42,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                return;
             }
 
-            @Override//ConfigAttribute 어떤게 오든 전부 허용
+            @Override
             public boolean supports(ConfigAttribute attribute) {
                 return true;
             }
@@ -53,18 +65,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
+    @Autowired
+    private NameCheck nameCheck;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .httpBasic().and()
                 .authorizeRequests(
-                        authority -> authority
+                        authority->authority
                                 .mvcMatchers("/greeting/{name}")
-                                    .hasRole("USER")
+                                    .access("@nameCheck.check(#name)")
                                 .anyRequest().authenticated()
 //                        .accessDecisionManager(filterAccessDecisionManager())
-                );
+                )
+                ;
     }
-
 }
