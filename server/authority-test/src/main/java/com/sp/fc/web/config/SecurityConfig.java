@@ -1,4 +1,4 @@
-package com.sp.fc.web.test;
+package com.sp.fc.web.config;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -60,7 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().and()
                 .authorizeRequests(
                         authority -> authority
-                                .mvcMatchers("/greeting").hasRole("ADMIN")
+                                .mvcMatchers("/greeting/{name}")
+                                    .hasRole("USER")
                                 .anyRequest().authenticated()
 //                        .accessDecisionManager(filterAccessDecisionManager())
                 );

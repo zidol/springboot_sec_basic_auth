@@ -1,4 +1,4 @@
-package com.sp.fc.web.test;
+package com.sp.fc.web.config;
 
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -21,6 +21,7 @@ public class CustomVoter implements AccessDecisionVoter<MethodInvocation> {
 
     @Override
     public int vote(Authentication authentication, MethodInvocation object, Collection<ConfigAttribute> attributes) {
+        System.out.println("authentication : " + authentication);
         return ACCESS_GRANTED;
     }
 }

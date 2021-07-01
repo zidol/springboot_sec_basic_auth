@@ -1,4 +1,4 @@
-package com.sp.fc.web.test;
+package com.sp.fc.web.config;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
