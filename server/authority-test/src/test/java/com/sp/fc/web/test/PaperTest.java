@@ -35,7 +35,7 @@ public class PaperTest extends WebIntegrationTest{
             .title("시험지2")
             .tutorId("tutor1")
             .studentIds(List.of("user2"))
-            .state(Paper.State.PREPARE)
+            .state(Paper.State.READY)
             .build();
 
     private Paper paper3 = Paper.builder()

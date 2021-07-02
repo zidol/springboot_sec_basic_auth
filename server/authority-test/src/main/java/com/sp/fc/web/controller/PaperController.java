@@ -24,16 +24,16 @@ public class PaperController {
     private PaperService paperService;
 
 //    @PreAuthorize("isStudent()")
-//    @PostFilter("filterObject.state != T(com.sp.fc.web.service.Paper.State).PREPARE")
+//    @PostFilter("filterObject.state != T(com.sp.fc.web.service.Paper.State).PREPARE") //CustomeMethodSercuretyExpressionRoot 에 공톻적으로 사용
+//    @PostFilter("noPrepareState(filterObject)")
 //    @PostFilter("noPrepareState(filterObject) && filterObject.studentIds.contains(#user.username)")
-@PostFilter("noPrepareState(filterObject)")
     @GetMapping("/mypapers")
     public List<Paper> myPapers(@AuthenticationPrincipal User user){
         return paperService.getMyPapers(user.getUsername());
     }
 
-//    @PreAuthorize("hasPermission(#paperId, 'paper', 'read')")
-    @PostAuthorize("returnObject.studentIds.contains(#user.username)")
+    @PreAuthorize("hasPermission(#paperId, 'paper', 'read')")
+//    @PostAuthorize("returnObject.studentIds.contains(#user.username)")
     @GetMapping("/get/{paperId}")
     public Paper getPaper(@AuthenticationPrincipal User user, @PathVariable Long paperId){
         return paperService.getPaper(paperId);
