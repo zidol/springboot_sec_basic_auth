@@ -4,6 +4,7 @@ package com.sp.fc.web.controller;
 import com.sp.fc.web.service.Paper;
 import com.sp.fc.web.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,5 +39,12 @@ public class PaperController {
     public Paper getPaper(@AuthenticationPrincipal User user, @PathVariable Long paperId){
         return paperService.getPaper(paperId);
     }
+
+//    @Secured({"SCHOOL_PRIMARY"})    //MethodSecurityConfiguration에서 securedEnabled = true 선언 해야 사용가능
+    @GetMapping("/getPapersByPrimary")
+    public List<Paper> getPapersByPrimary(){
+        return paperService.getAllPapers();
+    }
+
 
 }
