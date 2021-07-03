@@ -1,6 +1,7 @@
 package com.sp.fc.web.controller;
 
 
+import com.sp.fc.web.config.CustomSecurityTag;
 import com.sp.fc.web.service.Paper;
 import com.sp.fc.web.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class PaperController {
         return paperService.getMyPapers(user.getUsername());
     }
 
+    @Secured({"ROLE_USER","RUN_AS_PRIMARY"})
+    @GetMapping("/allpapers")
+    public List<Paper> allpapers(@AuthenticationPrincipal User user){
+        return paperService.getAllPapers();
+    }
+
     @PreAuthorize("hasPermission(#paperId, 'paper', 'read')")
 //    @PostAuthorize("returnObject.studentIds.contains(#user.username)")
     @GetMapping("/get/{paperId}")
@@ -40,6 +47,7 @@ public class PaperController {
         return paperService.getPaper(paperId);
     }
 
+    @CustomSecurityTag("SCHOOL_PRIMARY")
 //    @Secured({"SCHOOL_PRIMARY"})    //MethodSecurityConfiguration에서 securedEnabled = true 선언 해야 사용가능
     @GetMapping("/getPapersByPrimary")
     public List<Paper> getPapersByPrimary(){
