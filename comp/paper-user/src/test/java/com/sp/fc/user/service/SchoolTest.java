@@ -36,7 +36,7 @@ public class SchoolTest {
     @DisplayName("1. 학교를 생성한다.")
     @Test
     void test_1() {
-        School school = this.schoolTestHelper.createSchool("테스트 학교","서울");
+//        School school = this.schoolTestHelper.createSchool("테스트 학교","서울");
 
         List<School> list = schoolRepository.findAll();
         assertEquals(1, list.size());
