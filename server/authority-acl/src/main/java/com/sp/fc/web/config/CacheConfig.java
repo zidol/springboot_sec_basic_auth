@@ -6,20 +6,23 @@ import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ResourceBundle;
+
 //@Configuration
 //@EnableCaching
 public class CacheConfig {
 
 //    @Bean
-//    public EhCacheCacheManager cacheManager() {
+//    public EhCacheCacheManager cacheManager(){
 //        EhCacheCacheManager cacheManager = new EhCacheCacheManager();
 //        cacheManager.setCacheManager(ehcacheFactoryBean().getObject());
 //        return cacheManager;
 //    }
 //
 //    @Bean
-//    private EhCacheManagerFactoryBean ehcacheFactoryBean() {
+//    public EhCacheManagerFactoryBean ehcacheFactoryBean() {
 //        EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
 //        return factoryBean;
 //    }
+
 }

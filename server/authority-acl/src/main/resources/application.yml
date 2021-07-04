@@ -9,11 +9,11 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/acldemo2?useUnicode=true&serverTimezone=Asia/Seoul
-    jdbc-url: jdbc:mysql://localhost:3306/acldemo2?useUnicode=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3308/acldemo2?createDatabaseIfNotExist=true
+    jdbc-url: jdbc:mysql://localhost:3308/acldemo2?createDatabaseIfNotExist=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: wlehf73055186
+    username: user
+    password: 1111
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect

@@ -18,7 +18,7 @@ public class PaperController {
         this.paperService = paperService;
     }
 
-    @PostAuthorize("hasPermission(returnObject, 'READ')")// read 권한이 있는사람만 접근 허용
+    @PostAuthorize("hasPermission(returnObject, 'READ')")
     @GetMapping("/{paperId}")
     public Paper getPaper(
             @AuthenticationPrincipal User user,

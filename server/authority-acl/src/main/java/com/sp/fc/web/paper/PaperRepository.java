@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PaperRepository extends JpaRepository<Paper, Long> {
 
-
-//    @Cacheable("papers")
+//    @Cacheable(value="papers")
     Optional<Paper> findById(Long id);
+
 }

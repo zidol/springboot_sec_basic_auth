@@ -14,24 +14,27 @@ public class AclSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser(
                         User.withDefaultPasswordEncoder()
-                                .username("student1")
-                                .password("1111")
-                                .roles("STUDENT")
+                        .username("student1")
+                        .password("1111")
+                        .roles("STUDENT")
                 )
                 .withUser(
                         User.withDefaultPasswordEncoder()
-                                .username("tutor1")
-                                .password("1111")
-                                .roles("TUTOR")
-                );
+                        .username("tutor1")
+                        .password("1111")
+                        .roles("TUTOR")
+                )
+                ;
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(
-                        request -> request.anyRequest().authenticated())
-                .httpBasic();
-
+                        request->request.anyRequest().authenticated()
+                )
+                .httpBasic()
+                ;
     }
 }
