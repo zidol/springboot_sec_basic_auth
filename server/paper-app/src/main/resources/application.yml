@@ -30,3 +30,6 @@ spring:
 #  web:
 #    resources:
 #      static-locations:
+logging:
+  level:
+    org.springframework.web: trace
