@@ -1,5 +1,5 @@
 
-rootProject.name = 'sp-fastcampus-spring-sec'
+rootProject.name = 'springboot-sec-basic-auth'
 
 ["comp", "test", "web", "server"].each {
 
