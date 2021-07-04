@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         "com.sp.fc.config",
         "com.sp.fc.web",
         "com.sp.fc.site"
-
 })
 public class OnlinePaperApplication {
 
