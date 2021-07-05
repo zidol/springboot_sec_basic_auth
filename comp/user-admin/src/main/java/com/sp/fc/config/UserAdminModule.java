@@ -14,5 +14,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "com.sp.fc.user.repository"
 })
 public class UserAdminModule {
-
 }
