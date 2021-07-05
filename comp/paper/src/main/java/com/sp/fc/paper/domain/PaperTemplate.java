@@ -22,13 +22,11 @@ public class PaperTemplate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paperTemplateId;
 
-    //시험지 이름
     private String name;
 
-    //작성자 id
     private Long userId;
 
-    @Transient//
+    @Transient
     private User creator;
 
     private int total;
