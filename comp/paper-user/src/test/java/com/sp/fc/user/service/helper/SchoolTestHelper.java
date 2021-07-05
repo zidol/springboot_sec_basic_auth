@@ -3,36 +3,35 @@ package com.sp.fc.user.service.helper;
 
 import com.sp.fc.user.domain.School;
 import com.sp.fc.user.service.SchoolService;
-import com.sp.fc.user.service.SchoolTest;
 import lombok.RequiredArgsConstructor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-//도메인 객체 테스트 시 사용
 @RequiredArgsConstructor
 public class SchoolTestHelper {
 
     private final SchoolService service;
 
-    public static School makeSchool(String name, String city) {
+    public static School makeSchool(String name, String city){
         return School.builder()
                 .name(name)
                 .city(city)
                 .build();
     }
 
-    public School createSchool(String name, String city) {
+    public School createSchool(String name, String city){
         return service.save(makeSchool(name, city));
     }
 
-    public static void assertSchool(School school, String name, String city) {
+    public static void assertSchool(School school, String name, String city){
         assertNotNull(school.getSchoolId());
         assertNotNull(school.getCreated());
         assertNotNull(school.getUpdated());
 
         assertEquals(name, school.getName());
         assertEquals(city, school.getCity());
-
     }
+
+
 }

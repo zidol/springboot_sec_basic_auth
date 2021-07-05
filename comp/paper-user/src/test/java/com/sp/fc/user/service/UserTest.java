@@ -1,20 +1,14 @@
 package com.sp.fc.user.service;
 
 import com.sp.fc.user.domain.Authority;
-import com.sp.fc.user.domain.School;
 import com.sp.fc.user.domain.User;
-import com.sp.fc.user.repository.SchoolRepository;
-import com.sp.fc.user.repository.UserRepository;
-import com.sp.fc.user.service.helper.SchoolTestHelper;
 import com.sp.fc.user.service.helper.UserTestHelper;
 import com.sp.fc.user.service.helper.WithUserTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -121,7 +121,8 @@ public class HomeController {
         if(site == null) {
             site = estimateSite(request.getParameter("referer"));
         }
-        return "redirect:/"+site+"/signup";
+        System.out.println("site = " + site);
+        return "redirect:/signup/"+site;
     }
 
     @GetMapping("/access-denied")

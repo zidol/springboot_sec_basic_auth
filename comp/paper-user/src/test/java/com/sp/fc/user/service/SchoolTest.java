@@ -3,7 +3,6 @@ package com.sp.fc.user.service;
 import com.sp.fc.user.domain.School;
 import com.sp.fc.user.repository.SchoolRepository;
 import com.sp.fc.user.service.helper.SchoolTestHelper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,32 +11,29 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DataJpaTest//db datasource를 h2 db inmemory 형식으 만듬, repository(@Autowired 가능)  객체는 스프링 컨테이너에서 만들어줌 service는 만들어주지 않음
+@DataJpaTest
 public class SchoolTest {
 
     @Autowired
     private SchoolRepository schoolRepository;
 
-    private  SchoolService schoolService;
+    private SchoolService schoolService;
     private SchoolTestHelper schoolTestHelper;
     School school;
 
     @BeforeEach
-    void before() {
-        this.schoolRepository.deleteAll();// 유닛 테스트를 하다보면 데이터가 꼬이기때문에 매번 테스트시 repository는 비우고 실행
+    void before(){
+        this.schoolRepository.deleteAll();
         this.schoolService = new SchoolService(schoolRepository);
         this.schoolTestHelper = new SchoolTestHelper(this.schoolService);
-        school = this.schoolTestHelper.createSchool("테스트 학교","서울");
+        school = this.schoolTestHelper.createSchool("테스트 학교", "서울");
     }
-
 
     @DisplayName("1. 학교를 생성한다.")
     @Test
-    void test_1() {
-//        School school = this.schoolTestHelper.createSchool("테스트 학교","서울");
-
+    void test_1(){
         List<School> list = schoolRepository.findAll();
         assertEquals(1, list.size());
         SchoolTestHelper.assertSchool(list.get(0), "테스트 학교", "서울");
@@ -57,8 +53,9 @@ public class SchoolTest {
         assertEquals(1, list.size());
         assertEquals("서울", list.get(0));
 
-        schoolTestHelper.createSchool("부산 학교","부산");
+        schoolTestHelper.createSchool("부산 학교", "부산");
         list = schoolService.cities();
+        assertEquals(2, list.size());
     }
 
     @DisplayName("4. 지역으로 학교 목록을 가져온다.")
@@ -67,7 +64,7 @@ public class SchoolTest {
         List<School> list = schoolService.findAllByCity("서울");
         assertEquals(1, list.size());
 
-        schoolTestHelper.createSchool("서울2 학교","서울");
+        schoolTestHelper.createSchool("서울2 학교", "서울");
         list = schoolService.findAllByCity("서울");
         assertEquals(2, list.size());
     }
