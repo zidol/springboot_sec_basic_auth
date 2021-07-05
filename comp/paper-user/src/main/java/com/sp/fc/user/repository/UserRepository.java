@@ -11,14 +11,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface  UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 
     @Modifying(clearAutomatically = true)
     @Query("update User set name=?2, updated=?3 where userId=?1")
     void updateUserName(Long userId, String userName, LocalDateTime update);
 
-    //userSecurityService에서 사용
     Optional<User> findByEmail(String username);
 
     @Query("select a from User a, Authority b where a.userId=b.userId and b.authority=?1")

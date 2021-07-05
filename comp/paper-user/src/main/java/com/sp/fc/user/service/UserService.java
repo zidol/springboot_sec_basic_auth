@@ -44,18 +44,15 @@ public class UserService {
         return userRepository.findAll(PageRequest.of(pageNum-1, size));
     }
 
-    //user 리스트를 맵으로 변경
     public Map<Long, User> getUsers(List<Long> userIds){
         return StreamSupport.stream(userRepository.findAllById(userIds).spliterator(), false)
                 .collect(Collectors.toMap(User::getUserId, Function.identity()));
     }
 
-
     public void addAuthority(Long userId, String authority){
         userRepository.findById(userId).ifPresent(user->{
             Authority newRole = new Authority(user.getUserId(), authority);
             if(user.getAuthorities() == null){
-                //Set : authority 중복방지 해줌
                 HashSet<Authority> authorities = new HashSet<>();
                 authorities.add(newRole);
                 user.setAuthorities(authorities);

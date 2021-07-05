@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "sp_school")
+@Table(name="sp_school")
 public class School {
 
     @Id
@@ -24,9 +24,15 @@ public class School {
 
     private String city;
 
+    @Transient
+    private Long teacherCount;
+
+    @Transient
+    private Long studyCount;
 
     @Column(updatable = false)
     private LocalDateTime created;
 
     private LocalDateTime updated;
+
 }
